@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>嘿嘿嘿嘿嘿</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+  <script src="sketch.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      height: 80%;
+      border: 2px solid #000;
+    }
+    canvas.hidden {
+      display: none;
+    }
+    #menu {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <!-- 選單 -->
+  <div id="menu">
+    <label for="webpage-select">選擇網頁：</label>
+    <select id="webpage-select">
+      <option value="https://www.et.tku.edu.tw/">淡江教育科技學系首頁</option>
+      <option value="https://www.et.tku.edu.tw/Front/AboutET/Employment/Page.aspx?id=vcyTtXxq8Sg=">淡江教育科技學系 - 就業資訊</option>
+      <option value="https://www.tku.edu.tw/">淡江大學首頁</option>
+    </select>
+  </div>
+
+  <!-- 嵌入的網站 -->
+  <iframe id="embedded-site" src="https://www.et.tku.edu.tw/" allow="fullscreen"></iframe>
+
+  <script>
+    const iframe = document.getElementById('embedded-site');
+    const canvas = document.querySelector('canvas');
+    const selectMenu = document.getElementById('webpage-select');
+
+    // 動態生成「第一次作業」到「第一百次作業」的選項
+    for (let i = 1; i <= 100; i++) {
+      const option = document.createElement('option');
+      option.value = `https://example.com/assignment${i}`;
+      option.textContent = `第${i}次作業`;
+      selectMenu.appendChild(option);
+    }
+
+    // 當選單改變時更新 iframe 的 src
+    selectMenu.addEventListener('change', (event) => {
+      iframe.src = event.target.value;
+    });
+
+    // 當鼠標進入 iframe 時隱藏海草動畫
+    iframe.addEventListener('mouseenter', () => {
+      if (canvas) {
+        canvas.classList.add('hidden');
+      }
+    });
+
+    // 當鼠標離開 iframe 時顯示海草動畫
+    iframe.addEventListener('mouseleave', () => {
+      if (canvas) {
+        canvas.classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
